@@ -6,7 +6,7 @@ function sizesExtent(sizes) {
 
 		// Parse sizes so we can work with it more efficiently
 		.map((segment) => {
-			const match = /(?:\(((?:max|min)-width): (\d+)px\)\s*)?(.+)/.exec(segment);
+			const match = /(?:\(((?:max|min)-width): (\d+(?:\.\d+)?)px\)\s*)?(.+)/.exec(segment);
 
 			return {
 				conditional: match[1],
@@ -50,13 +50,13 @@ function calculate(width, segmentValue) {
 		return width / 100 * parseFloat(segmentValue);
 	}
 
-	const match = /calc\((\d+)vw\s*([+-])\s*(\d+)px\)/.exec(segmentValue);
+	const match = /calc\((\d+(?:\.\d+)?)vw\s*([+-])\s*(\d+(?:\.\d+)?)px\)/.exec(segmentValue);
 
 	if (!match) {
 		return null;
 	}
 
-	return width / 100 * parseFloat(match[1]) + (match[2] === '+' ? 1 : -1) * parseFloat(match[3]);
+	return width / 100 * Number(match[1]) + (match[2] === '+' ? 1 : -1) * Number(match[3]);
 }
 
 module.exports = sizesExtent;

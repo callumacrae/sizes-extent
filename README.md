@@ -1,8 +1,8 @@
 # sizes-extent
 
 > When given the `sizes` attribute of a responsive image and a range of screen
-> widths, will calculate the maximum and minimum widths of the image that will
-> be displayed.
+> widths, will calculate the maximum and minimum CSS pixel widths of the image
+> that will be displayed.
 
 ## Installation
 
