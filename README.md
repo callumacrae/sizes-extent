@@ -12,7 +12,7 @@ $ npm install --save sizes-extent
 
 ## Usage
 
-```
+```js
 const sizesExtent = require('sizes-extent');
 
 sizesExtent('(max-width: 1000px) 100vw, 30vw'); // [300, 1000]
