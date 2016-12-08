@@ -59,6 +59,11 @@ const cases = [
 		output: [257.4, 1319.22]
 	},
 	{
+		input: '50vw',
+		range: [500, 1000],
+		output: [250, 500]
+	},
+	{
 		input: 'broken input',
 		output: null
 	},
@@ -79,10 +84,12 @@ const cases = [
 let failures = 0;
 
 cases.forEach((testCase) => {
-	const extent = sizesExtent(testCase.input);
+	const extent = sizesExtent(testCase.input, testCase.range);
 
 	if (equal(extent, testCase.output)) {
-		console.log(chalk.bold.green('✓') + ' ' + testCase.input + chalk.dim(' === ' + format(testCase.output)));
+		const rangeDisplay = testCase.range ? chalk.dim.green(` (${testCase.range[0]}px-${testCase.range[1]}px)`) : '';
+		const outputDisplay = chalk.dim(' === ' + format(testCase.output));
+		console.log(chalk.bold.green('✓') + ' ' + testCase.input + rangeDisplay + outputDisplay);
 	} else {
 		console.log(chalk.bold.red('✘ ' + testCase.input));
 		console.log(`Expected ${format(testCase.output)}, got ${format(extent)}`);

@@ -1,6 +1,6 @@
-const range = [320, 1280];
+const defaultRange = [320, 1280];
 
-function sizesExtent(sizes) {
+function sizesExtent(sizes, range = defaultRange) {
 	const extent = sizes
 		.split(/\s*,\s*/)
 
