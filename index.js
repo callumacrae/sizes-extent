@@ -1,25 +1,24 @@
 const range = [320, 1280];
 
 function sizesExtent(sizes) {
-	return sizes
+	const extent = sizes
 		.split(/\s*,\s*/)
 
 		// Parse sizes so we can work with it more efficiently
 		.map((segment) => {
-			const match = /(?:\(((?:max|min)-width): (\d+)px\)\s*)?(\d+)(px|vw)/.exec(segment);
+			const match = /(?:\(((?:max|min)-width): (\d+)px\)\s*)?(.+)/.exec(segment);
 
 			return {
 				conditional: match[1],
 				conditionalValue: match[2] && Number(match[2]),
-				value: Number(match[3]),
-				valueUnit: match[4]
+				value: match[3]
 			};
 		})
 
 		// Iterate through segments, calculating min and max px of each segment
 		.map((segment, i, segments) => {
-			if (segment.valueUnit === 'px') {
-				return [segment.value, segment.value];
+			if (!segment.value.includes('vw')) {
+				return [parseFloat(segment.value), parseFloat(segment.value)];
 			}
 
 			const previous = segments[i - 1];
@@ -35,13 +34,29 @@ function sizesExtent(sizes) {
 			}
 
 			// Calculate min and max width of image for this segment
-			return [minWidth / 100 * segment.value, maxWidth / 100 * segment.value];
+			return [calculate(minWidth, segment.value), calculate(maxWidth, segment.value)];
 		})
 
 		// Calculate overall min and max
 		.reduce(([min, max], [segmentMin, segmentMax]) => {
 			return [Math.min(min, segmentMin), Math.max(max, segmentMax)];
 		}, [Infinity, 0]);
+
+	return (isNaN(extent[0]) || isNaN(extent[1])) ? null : extent;
+}
+
+function calculate(width, segmentValue) {
+	if (!segmentValue.includes('calc(')) {
+		return width / 100 * parseFloat(segmentValue);
+	}
+
+	const match = /calc\((\d+)vw\s*([+-])\s*(\d+)px\)/.exec(segmentValue);
+
+	if (!match) {
+		return null;
+	}
+
+	return width / 100 * parseFloat(match[1]) + (match[2] === '+' ? 1 : -1) * parseFloat(match[3]);
 }
 
 module.exports = sizesExtent;
