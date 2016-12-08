@@ -1,0 +1,25 @@
+{
+  "name": "sizes-extent",
+  "version": "0.1.0",
+  "description": "Find the min and max possible outputs of a sizes attribute",
+  "main": "index.js",
+  "dependencies": {
+    "chalk": "^1.1.3"
+  },
+  "devDependencies": {
+    "chalk": "^1.1.3"
+  },
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/callumacrae/test-extent.git"
+  },
+  "author": "Callum Macrae <callum@macr.ae>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/callumacrae/test-extent/issues"
+  },
+  "homepage": "https://github.com/callumacrae/test-extent#readme"
+}
