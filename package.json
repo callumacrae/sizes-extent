@@ -1,6 +1,6 @@
 {
   "name": "sizes-extent",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Find the min and max possible outputs of a sizes attribute",
   "main": "index.js",
   "dependencies": {
