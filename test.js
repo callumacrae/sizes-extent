@@ -1,7 +1,7 @@
-const chalk = require('chalk');
-const sizesExtent = require('./');
+var chalk = require('chalk');
+var sizesExtent = require('./');
 
-const cases = [
+var cases = [
 	{
 		input: '50px',
 		output: [50, 50]
@@ -81,14 +81,14 @@ const cases = [
 	}
 ];
 
-let failures = 0;
+var failures = 0;
 
-cases.forEach((testCase) => {
-	const extent = sizesExtent(testCase.input, testCase.range);
+cases.forEach(function (testCase) {
+	var extent = sizesExtent(testCase.input, testCase.range);
 
 	if (equal(extent, testCase.output)) {
-		const rangeDisplay = testCase.range ? chalk.dim.green(` (${testCase.range[0]}px-${testCase.range[1]}px)`) : '';
-		const outputDisplay = chalk.dim(' === ' + format(testCase.output));
+		var rangeDisplay = testCase.range ? chalk.dim.green(` (${testCase.range[0]}px-${testCase.range[1]}px)`) : '';
+		var outputDisplay = chalk.dim(' === ' + format(testCase.output));
 		console.log(chalk.bold.green('✓') + ' ' + testCase.input + rangeDisplay + outputDisplay);
 	} else {
 		console.log(chalk.bold.red('✘ ' + testCase.input));
