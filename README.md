@@ -1,4 +1,4 @@
-# sizes-extent
+# sizes-extent [![Build Status](https://travis-ci.org/callumacrae/sizes-extent.svg?branch=master)](https://travis-ci.org/callumacrae/sizes-extent)
 
 > When given the `sizes` attribute of a responsive image and a range of screen
 > widths, will calculate the maximum and minimum CSS pixel widths of the image

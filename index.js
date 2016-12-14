@@ -1,12 +1,14 @@
-const defaultRange = [320, 1280];
+function sizesExtent(sizes, range) {
+	if (!range) {
+		range = [320, 1280];
+	}
 
-function sizesExtent(sizes, range = defaultRange) {
 	const extent = sizes
 		.split(/\s*,\s*/)
 
 		// Parse sizes so we can work with it more efficiently
-		.map((segment) => {
-			const match = /(?:\(((?:max|min)-width): (\d+(?:\.\d+)?)px\)\s*)?(.+)/.exec(segment);
+		.map(function (segment) {
+			var match = /(?:\(((?:max|min)-width): (\d+(?:\.\d+)?)px\)\s*)?(.+)/.exec(segment);
 
 			return {
 				conditional: match[1],
@@ -16,13 +18,13 @@ function sizesExtent(sizes, range = defaultRange) {
 		})
 
 		// Iterate through segments, calculating min and max px of each segment
-		.map((segment, i, segments) => {
-			if (!segment.value.includes('vw')) {
+		.map(function (segment, i, segments) {
+			if (segment.value.indexOf('vw') === -1) {
 				return [parseFloat(segment.value), parseFloat(segment.value)];
 			}
 
-			const previous = segments[i - 1];
-			let minWidth, maxWidth;
+			var previous = segments[i - 1];
+			var minWidth, maxWidth;
 
 			// Calculate min and max width of screen for this segment
 			if (segments[0].conditional === 'max-width') {
@@ -38,8 +40,8 @@ function sizesExtent(sizes, range = defaultRange) {
 		})
 
 		// Calculate overall min and max
-		.reduce(([min, max], [segmentMin, segmentMax]) => {
-			return [Math.min(min, segmentMin), Math.max(max, segmentMax)];
+		.reduce(function (overall, segment) {
+			return [Math.min(overall[0], segment[0]), Math.max(overall[1], segment[1])];
 		}, [Infinity, 0]);
 
 	return (isNaN(extent[0]) || isNaN(extent[1])) ? null : extent;
@@ -50,7 +52,7 @@ function calculate(width, segmentValue) {
 		return width / 100 * parseFloat(segmentValue);
 	}
 
-	const match = /calc\((\d+(?:\.\d+)?)vw\s*([+-])\s*(\d+(?:\.\d+)?)px\)/.exec(segmentValue);
+	var match = /calc\((\d+(?:\.\d+)?)vw\s*([+-])\s*(\d+(?:\.\d+)?)px\)/.exec(segmentValue);
 
 	if (!match) {
 		return null;
